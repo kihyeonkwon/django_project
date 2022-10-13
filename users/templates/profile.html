@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>프로필 페이지입니다.</title>
+  </head>
+  <body>
+    <div>{{ user }}님의 페이지이고 마지막 로그인은 {{ user.last_login }}</div>
+    <div>지금 로그인한 사용자는 {{ request.user }}</div>
+
+    {% if user == request.user %}
+    <div>내 프로필 페이지</div>
+    <button>프로필 편집버튼</button>
+    {% endif %}
+  </body>
+</html>
