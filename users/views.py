@@ -1,7 +1,8 @@
 from http import HTTPStatus
+from operator import ge
 from urllib import response
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import User
 from django.contrib.auth import authenticate, login as loginsession
 
@@ -46,3 +47,13 @@ def login(request):
 
 def user(request):
     return HttpResponse(request.user)
+
+
+def profile(request, username):
+    # user = User.objects.get(username = username)
+    user = get_object_or_404(User, username=username)
+    context = {
+        "user":user,
+        "me":request.user
+    }
+    return render(request, 'profile.html', context)

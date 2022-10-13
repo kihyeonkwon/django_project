@@ -21,7 +21,3 @@ urlpatterns = [
     path("users/", include("users.urls")),
 ]
 
-
-정유준
-강기훈
-임동근
