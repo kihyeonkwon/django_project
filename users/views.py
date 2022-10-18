@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .models import User
-from django.contrib.auth import authenticate, login as loginsession
+from django.contrib.auth import authenticate, login as loginsession, password_validation
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
+
 
 
 def signup(request):
@@ -15,6 +16,7 @@ def signup(request):
         password = request.POST.get('password')
         passwordcheck = request.POST.get('passwordcheck')
         if password == passwordcheck:
+            # password_valid = password_validation.validate_password(password)
             User.objects.create_user(username=username, password=password)
             return HttpResponse("회원가입 완료!")
         else:
@@ -29,6 +31,7 @@ def login(request):
     if request.method == "GET":
         return render(request, 'login.html')
     elif request.method == "POST":
+
         username = request.POST.get("username")
         password = request.POST.get("password")
         user = authenticate(request, username=username, password=password)
@@ -44,7 +47,7 @@ def user(request):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     context = {
-        "user": user
+        "user": user,
     }
     return render(request, 'profile.html', context)
 

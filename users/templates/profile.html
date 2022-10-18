@@ -10,6 +10,15 @@
     <div>{{ user }}님의 페이지이고 마지막 로그인은 {{ user.last_login }}</div>
     <div>지금 로그인한 사용자는 {{ request.user }}</div>
 
+    <h2>작성한 글</h2>
+    <div>
+      {% for article in user.article_set.all %}
+
+      <div>{{ article.title }}</div>
+      <div>{{ article.content }}</div>
+      {% endfor %}
+    </div>
+
     {% if user == request.user %}
     <div>내 프로필 페이지</div>
     <button>프로필 편집버튼</button>
