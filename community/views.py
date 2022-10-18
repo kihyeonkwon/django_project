@@ -1,12 +1,14 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from community.models import Article
+from community.models import Article, Comment
 from django.shortcuts import get_object_or_404
+from django.db.models import Count
 
 # Create your views here.
 
 def index(request):
-    articles = Article.objects.all().order_by('-created_at')
+    # articles = Article.objects.all().order_by('-created_at')
+    articles = Article.objects.annotate(num_comments=Count('comment'))
     context={
         "articles":articles
     }
@@ -30,9 +32,6 @@ def article_detail(request, article_id):
     if request.method == 'GET':
         article = Article.objects.get(id=article_id)
         # article = get_object_or_404(Article, id=article_id)
-        print(article)
-        print(article.title)
-        print(article.user)
         context = {
             "article":article
         }
@@ -65,3 +64,20 @@ def delete_article(request, article_id):
             return HttpResponse("권한이 없습니다.")
         article.delete()
         return redirect("community:index")
+
+def create_comment(request, article_id):
+    if request.method == 'POST':
+        content = request.POST.get("content")
+        user = request.user
+        Comment.objects.create(content=content, user = user, article_id= article_id)
+        return redirect("community:article_detail", article_id)
+
+
+def delete_comment(request, article_id, comment_id):
+    if request.method == 'POST':
+        comment = Comment.objects.get(id=comment_id)
+        if comment.user == request.user:
+            comment.delete()
+            return redirect("community:article_detail", article_id)
+        else:
+            return HttpResponse("권한이 없습니다!")

@@ -26,5 +26,41 @@
     </form>
 
     {% endif %}
+
+    <div>
+      <h3>댓글 부분</h3>
+      {% for comment in article.comment_set.all %}
+      <div>
+        <div>댓글 작성자 : {{ comment.user }}</div>
+        <div>댓글 내용 : {{ comment.content }}</div>
+        {% if comment.user == request.user %}
+        <form
+          action="{% url 'community:delete_comment' article.id comment.id %}"
+          method="post"
+        >
+          {% csrf_token %}
+          <input type="submit" />
+        </form>
+        {% endif %}
+        <br />
+      </div>
+      {% endfor %}
+    </div>
+
+    <div>
+      <form
+        action="{% url 'community:create_comment' article.id %}"
+        method="post"
+      >
+        {% csrf_token %}
+        <input
+          type="text"
+          name="content"
+          id="content"
+          placeholder="댓글 입력해주세요!"
+        />
+        <input type="submit" />
+      </form>
+    </div>
   </body>
 </html>

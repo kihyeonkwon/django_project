@@ -1,5 +1,6 @@
 from django.contrib import admin
-from community.models import Article
+from community.models import Article, Comment
 
 
 admin.site.register(Article)
+admin.site.register(Comment)

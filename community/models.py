@@ -19,5 +19,12 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    # comment = Comment.objects.get(id=id)
+    # comment.user
+    # comment.article
+
+    # user = request.user
+    # user.article_set.all
+    # user.comment_set.all
     def __str__(self):
-        return str(self.content)
+        return str(f'{self.user}님이 작성하신 {self.content}')
