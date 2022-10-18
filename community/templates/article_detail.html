@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ article.title }}</title>
+  </head>
+  <body>
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.content }}</p>
+    {% if article.user == request.user %} hi
+    <form
+      action="{% url 'community:delete_article' article.pk %}"
+      method="POST"
+    >
+      {% csrf_token %}
+      <button type="submit">DELETE</button>
+    </form>
+    <a href="{% url 'community:update_article' article.pk %}">EDIT</a><br />
+    {% endif %}
+
+    <div>
+      <form
+        action="{% url 'community:create_comment' article.pk %}"
+        method="POST"
+      >
+        {% csrf_token %}
+        <input
+          type="text"
+          name="content"
+          id="content"
+          placeholder="댓글 입력"
+        />
+        <input type="submit" />
+      </form>
+    </div>
+
+    <h3>댓글들</h3>
+    {% for comment in article.comment_set.all %}
+    <div>
+      <div>댓글쓴사람 : {{ comment.user }}</div>
+      <div>댓글 내용 : {{ comment.content }}</div>
+      {% if comment.user == request.user %}
+      <form
+        action="{% url 'community:delete_comment' article.pk comment.pk%}"
+        method="post"
+      >
+        {% csrf_token %}
+        <input type="submit" />
+      </form>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </body>
+</html>

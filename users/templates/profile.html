@@ -10,6 +10,7 @@
     {{ user }} 님의 프로필 페이지입니다. 가입한 날짜는 {{ user.date_joined }}
     <br />
 
+    {% for article in user.article_set.all %} {{ article.title }} {% endfor %}
     지금 로그인한 사용자는 {{ me }} 이고 가입한 날짜는 {{ me.date_joined }}
   </body>
 </html>

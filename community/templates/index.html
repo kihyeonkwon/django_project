@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Articles</title>
+  </head>
+  <body>
+    {% for article in articles %}
+    <div>
+      <h1>{{ article.title }}</h1>
+      <p>{{ article.content }}</p>
+      <a href="{% url 'community:article_detail' article.id %}">[자세히보기]</a>
+      <p>{{ article.created_at }}</p>
+      <p>{{ article.user }}</p>
+      <p>{{ article.user.date_joined }}</p>
+      <p>댓글 수 : {{ article.comment_set.count }}</p>
+      <p>댓글 수 : {{ article.num_comment }}</p>
+    </div>
+
+    {% endfor %}
+  </body>
+</html>

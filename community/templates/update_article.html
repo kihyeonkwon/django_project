@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시글 작성 페이지</title>
+  </head>
+  <body>
+    게시글 작성 페이지
+
+    <form
+      action="{% url 'community:update_article' article.pk %}"
+      method="POST"
+    >
+      {% csrf_token %}
+      <div>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="제목"
+          value="{{ article.title }}"
+        />
+      </div>
+      <div>
+        <textarea
+          name="content"
+          id="content"
+          cols="30"
+          rows="10"
+          placeholder="내용"
+        >
+      
+      {{ article.content }}
+      </textarea
+        >
+      </div>
+      <input type="submit" />
+    </form>
+  </body>
+</html>
